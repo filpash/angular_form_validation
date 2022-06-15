@@ -4,7 +4,7 @@
 </div>
 
 <div class="container">
-  <form (ngSubmit)="processForm()" *ngIf="!submitted">
+  <form (ngSubmit)="processForm()" *ngIf="!submitted" #form='ngForm'>
 
     <div class="form-group"
          [ngClass]="{
@@ -41,7 +41,7 @@
     </div>
 
     <div class="form-group">
-      <button type="submit" class="btn btn-primary">Save</button>
+      <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Save</button>
     </div>
 
     {{ diagnostic }}
