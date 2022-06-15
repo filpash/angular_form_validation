@@ -6,24 +6,38 @@
 <div class="container">
   <form (ngSubmit)="processForm()" *ngIf="!submitted">
 
-    <div class="form-group">
-      <label>Name</label>
+    <div class="form-group"
+         [ngClass]="{
+            'has-error': name.invalid && name.touched,
+            'has-success': name.invalid && name.touched
+          }"
+    >
+      <label class="control-label">Name</label>
       <input type="text" class="form-control" name="name" required
              [(ngModel)]="user.name"
-             #name
+             #name='ngModel'
       >
 
-      {{ name.className }}
+      <span class="help-block" *ngIf="name.invalid && name.touched">
+        Name is required.
+      </span>
     </div>
 
-    <div class="form-group">
+    <div class="form-group"
+         [ngClass]="{
+            'has-error': username.invalid && username.touched,
+            'has-success': username.invalid && username.touched
+          }"
+    >
       <label>Username</label>
       <input type="text" class="form-control" name="username" required
              [(ngModel)]="user.userName"
-             #username
+             #username='ngModel'
       >
 
-      {{ username.className }}
+      <span class="help-block" *ngIf="username.invalid && username.touched">
+        Username is required.
+      </span>
     </div>
 
     <div class="form-group">
