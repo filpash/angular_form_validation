@@ -29,6 +29,7 @@
     "strictInjectionParameters": false,
     "strictInputAccessModifiers": false,
     "strictTemplates": false,
-    "noImplicitReturns": false
+    "noImplicitReturns": false,
+    "strictNullChecks": false
   }
 }
