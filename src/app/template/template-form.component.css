@@ -5,3 +5,23 @@ input.ng-valid.ng-touched {
 input.ng-invalid.ng-touched {
   border-left: 5px solid red;
 }
+
+.help-block {
+  color: red;
+}
+
+.control-label-err {
+  color: red;
+}
+
+.form-control-err {
+  border: 1px solid red;
+}
+
+.control-label-success {
+  color: green;
+}
+
+.form-control-success {
+  border: 1px solid green;
+}
