@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 
 export class User {
   name: string;
@@ -8,7 +8,8 @@ export class User {
 @Component({
   selector: 'template-form',
   templateUrl: 'template-form.component.html',
-  styleUrls: ['template-form.component.css']
+  styleUrls: ['template-form.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class TemplateFormComponent implements OnInit {
