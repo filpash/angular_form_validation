@@ -1,5 +1,10 @@
+<div class="jumbotron text-center" *ngIf="submitted">
+  <h2>Thanks for your submission!</h2>
+  <p>We appreciate it.</p>
+</div>
+
 <div class="container">
-  <form>
+  <form (ngSubmit)="processForm()" *ngIf="!submitted">
 
     <div class="form-group">
       <label>Name</label>
@@ -19,7 +24,7 @@
       <button type="submit" class="btn btn-primary">Save</button>
     </div>
 
-  </form>
+    {{ diagnostic }}
 
-  {{ diagnostic }}
+  </form>
 </div>

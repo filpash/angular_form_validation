@@ -13,6 +13,7 @@ export class User {
 
 export class TemplateFormComponent implements OnInit {
   public user: User;
+  public submitted: boolean = false;
 
   constructor() {}
 
@@ -25,5 +26,10 @@ export class TemplateFormComponent implements OnInit {
 
   public get diagnostic() {
     return JSON.stringify(this.user);
+  }
+
+  public processForm() {
+    console.log(this.user);
+    this.submitted = true;
   }
 }
