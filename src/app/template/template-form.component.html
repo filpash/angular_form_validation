@@ -6,14 +6,23 @@
 <div class="container">
   <form (ngSubmit)="processForm()" *ngIf="!submitted" #form='ngForm'>
 
-    <div class="form-group"
-         [ngClass]="{
-            'has-error': name.invalid && name.touched,
-            'has-success': name.invalid && name.touched
-          }"
-    >
-      <label class="control-label">Name</label>
-      <input type="text" class="form-control" name="name" required
+    <div class="form-group">
+      <label class="control-label"
+             [ngClass]="{
+                'control-label-err': name.invalid && name.touched,
+                'control-label-success': name.valid
+             }"
+      >
+        Name
+      </label>
+      <input type="text"
+             class="form-control"
+             name="name"
+             required
+             [ngClass]="{
+                'form-control-err': name.invalid && name.touched,
+                'form-control-success': name.valid
+             }"
              [(ngModel)]="user.name"
              #name='ngModel'
       >
@@ -23,14 +32,23 @@
       </span>
     </div>
 
-    <div class="form-group"
-         [ngClass]="{
-            'has-error': username.invalid && username.touched,
-            'has-success': username.invalid && username.touched
-          }"
-    >
-      <label>Username</label>
-      <input type="text" class="form-control" name="username" required
+    <div class="form-group">
+      <label class="control-label"
+             [ngClass]="{
+                'control-label-err': username.invalid && username.touched,
+                'control-label-success': username.valid
+             }"
+      >
+        Username
+      </label>
+      <input type="text"
+             class="form-control"
+             name="username"
+             required
+             [ngClass]="{
+                'form-control-err': username.invalid && username.touched,
+                'form-control-success': username.valid
+             }"
              [(ngModel)]="user.userName"
              #username='ngModel'
       >

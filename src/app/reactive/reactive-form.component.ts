@@ -10,6 +10,8 @@ import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms"
 
 export class ReactiveFormComponent implements OnInit {
   public form: FormGroup;
+  public nameError: string;
+  public usernameError: string;
 
   constructor(private fb: FormBuilder) {}
 
@@ -17,6 +19,19 @@ export class ReactiveFormComponent implements OnInit {
     this.form = this.fb.group({
       name: [''],
       username: ['']
+    });
+
+    this.form.valueChanges.subscribe(data => {
+      let name = this.form.get('name');
+      let username = this.form.get('username');
+
+      if (name?.invalid && name.dirty) {
+        this.nameError = 'Name is required.';
+      }
+
+      if (username?.invalid && username.dirty) {
+        this.usernameError = 'Username is required';
+      }
     })
   }
 
