@@ -6,8 +6,8 @@
         <label for="name">Name</label>
         <input id="name" type="text" class="form-control" formControlName="name" name="name" required>
 
-        <span class="help-block" *ngIf="nameError">
-          {{ nameError }}
+        <span class="help-block" *ngIf="formErrors.name">
+          {{ formErrors.name }}
         </span>
       </div>
 
@@ -15,8 +15,8 @@
         <label for="username">Username</label>
         <input id="username" type="text" class="form-control" formControlName="username" name="username" required>
 
-        <span class="help-block" *ngIf="usernameError">
-          {{ usernameError }}
+        <span class="help-block" *ngIf="formErrors.username">
+          {{ formErrors.username }}
         </span>
       </div>
 

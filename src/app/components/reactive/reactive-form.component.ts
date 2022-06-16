@@ -1,6 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
+import { FormErrors } from "../../models/form-errors";
+import { FormControlValidationService } from "../../services/form-control-validation.service";
+
 @Component({
   selector: 'reactive-form',
   templateUrl: 'reactive-form.component.html',
@@ -10,13 +13,20 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 
 export class ReactiveFormComponent implements OnInit {
   public form: FormGroup;
-  public nameError: string;
-  public usernameError: string;
+  public formErrors$: FormErrors;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private formControlValidationService: FormControlValidationService
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
+  }
+
+  get formErrors() {
+    this.formErrors$ = this.formControlValidationService.formError$;
+    return this.formErrors$;
   }
 
   public buildForm() {
@@ -31,22 +41,7 @@ export class ReactiveFormComponent implements OnInit {
   }
 
   public validateForm() {
-    this.nameError = '';
-    this.usernameError = '';
-
-    let name = this.form.get('name');
-    let username = this.form.get('username');
-
-    if (name?.invalid && name.dirty) {
-      if (name?.errors['required']) this.nameError = 'Name is required.'
-      if (name?.errors['minlength']) this.nameError = 'Name must be at least  3 characters.'
-      if (name?.errors['maxlength']) this.nameError = 'Name can\'t be more than 6 characters.'
-    }
-
-    if (username?.invalid && username.dirty) {
-      if (username?.errors['required']) this.usernameError = 'Username is required.'
-      if (username?.errors['minlength']) this.usernameError = 'Username must be at least  3 characters.'
-    }
+    this.formControlValidationService.validate(this.form);
   }
 
   public processForm() {
