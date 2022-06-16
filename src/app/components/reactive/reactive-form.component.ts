@@ -54,6 +54,19 @@ export class ReactiveFormComponent implements OnInit {
     this.formControlValidationService.validate(this.form);
   }
 
+  public addAddress() {
+    let address = <FormArray>this.form.get('addresses');
+    address.push(this.fb.group({
+      city: [''],
+      country: ['']
+    }));
+  }
+
+  public removeAddress(index: number) {
+    let address = <FormArray>this.form.get('addresses');
+    address.removeAt(index);
+  }
+
   public processForm() {
     console.log(this.form.value);
   }
