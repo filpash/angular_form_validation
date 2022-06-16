@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormArray } from "@angular/forms";
 
 import { FormErrors } from "../../models/form-errors";
 import { FormControlValidationService } from "../../services/form-control-validation.service";
@@ -29,11 +29,21 @@ export class ReactiveFormComponent implements OnInit {
     return this.formErrors$;
   }
 
+  public getControls() {
+    return (this.form.get('addresses') as FormArray).controls;
+  }
+
   public buildForm() {
     // build our form
     this.form = this.fb.group({
       name: ['', [Validators.minLength(3), Validators.maxLength(6)]],
-      username: ['', [Validators.required, Validators.minLength(3)]]
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      addresses: this.fb.array([
+        this.fb.group({
+          city: [''],
+          country: ['']
+        })
+      ])
     });
 
     // watch for changes & validate

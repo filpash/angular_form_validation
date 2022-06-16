@@ -5,3 +5,19 @@
 .help-block {
   color: red;
 }
+
+.panel-primary {
+  border-radius: 4px;
+  border: 1px solid #0d6efd;
+}
+
+.panel-heading {
+  background-color: #0d6efd;
+  padding: 20px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.panel-body {
+  padding: 20px;
+}
