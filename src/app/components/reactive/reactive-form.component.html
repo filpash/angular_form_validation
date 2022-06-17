@@ -1,10 +1,32 @@
+<div class="jumbotron text-center" *ngIf="isSubmitted">
+  <h2>The Reactive form has been sent!</h2>
+  <p>We appreciate it.</p>
+</div>
+
 <div class="main">
 
   <div class="container">
-    <form (ngSubmit)="processForm()" [formGroup]="form">
+    <form (ngSubmit)="processForm()" [formGroup]="form" *ngIf="!isSubmitted">
       <div class="form-group">
-        <label for="name">Name</label>
-        <input id="name" type="text" class="form-control" formControlName="name" name="name" required>
+        <label for="name"
+               [ngClass]="{
+                  'control-label-err': form.get('name').invalid && form.get('name').touched,
+                  'control-label-success': form.get('name').valid && form.get('name').touched
+                }"
+        >
+          Name
+        </label>
+        <input id="name"
+               type="text"
+               class="form-control"
+               formControlName="name"
+               name="name"
+               required
+               [ngClass]="{
+                'form-control-err': form.get('name').invalid && form.get('name').touched,
+                'form-control-success': form.get('name').valid && form.get('name').touched
+               }"
+        >
 
         <span class="help-block" *ngIf="formErrors.name">
           {{ formErrors.name }}
@@ -12,8 +34,25 @@
       </div>
 
       <div class="form-group">
-        <label for="username">Username</label>
-        <input id="username" type="text" class="form-control" formControlName="username" name="username" required>
+        <label for="username"
+               [ngClass]="{
+                  'control-label-err': form.get('username').invalid && form.get('username').touched,
+                  'control-label-success': form.get('username').valid && form.get('username').touched
+                }"
+        >
+          Username
+        </label>
+        <input id="username"
+               type="text"
+               class="form-control"
+               formControlName="username"
+               name="username"
+               required
+               [ngClass]="{
+                'form-control-err': form.get('username').invalid && form.get('username').touched,
+                'form-control-success': form.get('username').valid && form.get('username').touched
+               }"
+        >
 
         <span class="help-block" *ngIf="formErrors.username">
           {{ formErrors.username }}
@@ -37,13 +76,49 @@
 
             <div class="panel-body" [formGroupName]="i">
               <div class="form-group">
-                <label>City</label>
-                <input type="text" class="form-control" formControlName="city" required>
+                <label [ngClass]="{
+                        'control-label-err': getControls().at(i).get('city').invalid && getControls().at(i).get('city').touched,
+                        'control-label-success': getControls().at(i).get('city').valid && getControls().at(i).get('city').touched
+                       }"
+                >
+                  City
+                </label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="city"
+                       required
+                       [ngClass]="{
+                        'form-control-err': getControls().at(i).get('city').invalid && getControls().at(i).get('city').touched,
+                        'form-control-success': getControls().at(i).get('city').valid && getControls().at(i).get('city').touched
+                       }"
+                >
+
+                <span class="help-block" *ngIf="formErrors.addresses[i].city">
+                  {{ formErrors.addresses[i].city }}
+                </span>
               </div>
 
               <div class="form-group">
-                <label>Country</label>
-                <input type="text" class="form-control" formControlName="country" required>
+                <label [ngClass]="{
+                        'control-label-err': getControls().at(i).get('country').invalid && getControls().at(i).get('country').touched,
+                        'control-label-success': getControls().at(i).get('country').valid && getControls().at(i).get('country').touched
+                       }"
+                >
+                  Country
+                </label>
+                <input type="text"
+                       class="form-control"
+                       formControlName="country"
+                       required
+                       [ngClass]="{
+                        'form-control-err': getControls().at(i).get('country').invalid && getControls().at(i).get('country').touched,
+                        'form-control-success': getControls().at(i).get('country').valid && getControls().at(i).get('country').touched
+                       }"
+                >
+
+                <span class="help-block" *ngIf="formErrors.addresses[i].country">
+                  {{ formErrors.addresses[i].country }}
+                </span>
               </div>
             </div>
           </div>
@@ -55,8 +130,10 @@
       </div>
 
       <div class="form-group">
-        <button type="submit" class="btn btn-danger">Submit</button>
+        <button type="submit" class="btn btn-danger" [disabled]="form.invalid">Submit</button>
       </div>
+
+      {{ diagnosticReactiveForm }}
     </form>
   </div>
 

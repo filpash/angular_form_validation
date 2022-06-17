@@ -14,6 +14,7 @@ import { FormControlValidationService } from "../../services/form-control-valida
 export class ReactiveFormComponent implements OnInit {
   public form: FormGroup;
   public formErrors$: FormErrors;
+  public isSubmitted: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -40,7 +41,7 @@ export class ReactiveFormComponent implements OnInit {
       username: ['', [Validators.required, Validators.minLength(3)]],
       addresses: this.fb.array([
         this.fb.group({
-          city: [''],
+          city: ['', [Validators.minLength(3)]],
           country: ['']
         })
       ])
@@ -57,7 +58,7 @@ export class ReactiveFormComponent implements OnInit {
   public addAddress() {
     let address = <FormArray>this.form.get('addresses');
     address.push(this.fb.group({
-      city: [''],
+      city: ['', Validators.minLength(3)],
       country: ['']
     }));
   }
@@ -67,8 +68,13 @@ export class ReactiveFormComponent implements OnInit {
     address.removeAt(index);
   }
 
+  public get diagnosticReactiveForm() {
+    return JSON.stringify(this.form.value);
+  }
+
   public processForm() {
     console.log(this.form.value);
+    this.isSubmitted = true;
   }
 
 }
