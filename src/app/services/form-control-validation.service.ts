@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import {FormArray, FormGroup} from '@angular/forms';
 import { FormErrors } from '../models/form-errors';
 import { ValidationMessages } from '../models/validation-messages';
 
@@ -10,7 +10,10 @@ export class FormControlValidationService {
 
   formError$: FormErrors = {
     name: '',
-    username: ''
+    username: '',
+    addresses: [
+      { city: '', country: '' }
+    ]
   };
 
   validationMessages$: ValidationMessages = {
@@ -22,10 +25,19 @@ export class FormControlValidationService {
     username: {
       required: 'Username is required.',
       minlength: 'Username must be at least  3 characters.',
+    },
+    addresses: {
+      city: {
+        required: 'City is required.',
+        minlength: 'City must be 3 characters.'
+      },
+      country: {
+        required: 'Country is required.'
+      }
     }
   }
 
-  validate(form: FormGroup) {
+  public validate(form: FormGroup) {
     for (let field in this.formError$) {
       // clear that input field errors
       this.formError$[field] = '';
@@ -41,6 +53,40 @@ export class FormControlValidationService {
           this.formError$[field] = this.validationMessages$[field][error];
         }
       }
+    }
+
+    this.validateAddresses(form);
+  }
+
+  public validateAddresses(form: FormGroup) {
+    // grab the addresses formArray
+    let addresses = <FormArray>form.get('addresses');
+
+    // clear the form errors
+    this.formError$.addresses = [];
+    // loop through however many form groups are in the form array
+    let n = 1;
+    while (n <= addresses.length) {
+      // add the clear errors back
+      this.formError$.addresses.push({ city: '', country: '' });
+
+      // grab the specific group
+      let address = <FormGroup>addresses.at(n - 1);
+
+      // validate the specific grab. loop through the groups controls
+      for (let field in address.controls) {
+        // get the form control
+        let input = address.get(field);
+
+        // do the validation and save errors to form errors if necessary
+        if (input?.invalid && input.dirty) {
+          for (let error in input.errors) {
+            this.formError$.addresses[n - 1][field] = this.validationMessages$.addresses[field][error];
+          }
+        }
+      }
+
+      n++;
     }
   }
 }
